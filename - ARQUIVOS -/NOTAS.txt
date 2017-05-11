@@ -1,0 +1,41 @@
+Para utilizar o PHP Mysql e Composer via linha de comando, não se esqueça de conferir se os executáveis dos referidos programas 
+estão na variável de sistema PATH, senão não será possível localiza-los via linha via cmd
+
+COMANDOS DO COMPOSER
+
+As vezes precisamos criar instalar dependencias apenas no ambiente de produção, para isso utilizamos a flag --dev
+
+= COMPOSER REQUIRE autor/dependencia:versao --dev
+
+==========================================================================================================================
+
+PIMPLE
+
+É um plugin de injeção de dependencia criado pelos mesmo administradores do silex. Vamos utiliza=lo para implementar a nossa 
+camada de serviço, com ela poderemos gerenciar com segurança dados globais para a aplicação, assim podemos criar configurações 
+que serão facilmente recuperadas e que podem ser utilizada em todas as páginas da aplicação
+
+O pimple pode ser instalado em: https://pimple.sensiolabs.org/
+
+Contudo como o pimple não dá suporte a PSR11(sob revisao) con isso instalaremos a seguinte dependencia:
+https://github.com/xtreamwayz/pimple-container-interop [Já vai instalar o pimple com a PSR11]  
+
+==========================================================================================================================
+
+PHINX
+
+==========================================================================================================================
+
+AURA ROUTER
+
+É uma biblioteca para gerenciar as requisições do servidor através de rotas. Com ele podemos criar rotas amigáveis a 
+serem acessadas via browser. 
+
+==========================================================================================================================
+
+ZEND DIACTOROS
+
+É uma biblioteca para gerenciar as requisições http. Com essa biblioteca padronizamos o recebimento e envio de mensagens
+para PSR7
+
+==========================================================================================================================

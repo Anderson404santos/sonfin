@@ -1,0 +1,12 @@
+<?php 
+// Definindo que utilizaremos a notação estrita do PHP, com ela podemos ativar a tipagem de variaveis, que é uma novidade do PHP7
+declare(strict_types=1);
+namespace SONFin;
+
+interface ServiceContainerInterface{
+	// Com o PHP7 podemos tipar o tipo de variável. Observe que não é como no java, se quisermos simplesmente não tipar o tipo de variável também temos essa opção
+	public function add(string $name,$service);
+	public function addLazy(string $name, callable $callable);
+	public function get(string $name);
+	public function has(string $name);
+}
