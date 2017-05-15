@@ -16,7 +16,7 @@ $app =  new Application($serviceContainer);
 $app->plugin(new RoutePlugin());
 
 // Definimos no application que o método get() cria uma rota.
-$app->get("/home",function(){
+$app->get("/",function(){
 	echo "hello world";
 });
 
