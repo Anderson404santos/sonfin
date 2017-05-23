@@ -34,7 +34,7 @@ class RoutePlugin implements PluginInterface
 		// RequestInterface::class vai retornar uma String com o nome do objeto que gerencia a requisição 
 		$container->add(RequestInterface::class, $request);
 		
-		// Vamos criar o carregamento retardado de dados que fizemos com o pimple
+		// Vamos criar o carregamento retardado de dados que fizemos com o pimple, às vezes o nosso serviço depende outros plugins nesse caso criar o método atrasado pode ser útil
 		$container->addLazy('route',function(ContainerInterface $container){
 			// Então a nossa rota vai esperar por um objeto que implementa a interface ContainerInterface nela teremos os dados da requisição e o matcher		
 			$matcher = $container->get('routing.matcher');

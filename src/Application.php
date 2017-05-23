@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace SONFin;
 
 use SONFin\plugin\PluginInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\SapiEmitter;
 
 class Application{
 	private $serviceContainer;
@@ -38,9 +41,37 @@ class Application{
 		return $this;
 	}
 	
+	// Esse método executa a rota
 	public function start(){
+		
+		// Obtém a rota acessada
 		$route = $this->service('route');
+		$request = $this->service(RequestInterface::class);
+		
+		// Verifica se a tora é válida
+		if(!$route)
+		{
+			echo "Page not found";
+			exit;
+		}
+		
+		// Pega os atributos passados junto com a rota
+		foreach($route->attributes as $key => $value)
+		{			
+			// O método withAttribute() pertence a  biblioteca aura, vai fazer uma busca no cabeçalho pelo campo que for requisitado na rota
+			$request = $request->withAttribute($key,$value);
+		}	
+	
+		// Vamos acessar a ação da rota que vai retornar dados processados
 		$callable = $route->handler; 
-		$callable();
+		// Recebendo os dados processados pela ação da rota
+		$response = $callable($request);
+		$this->emitResponse($response);
+	}
+	
+	// Esse método pega os dados retornados pela rota e joga eles na response
+	protected function emitResponse(ResponseInterface $response){
+		$emitter = new SapiEmitter();
+		$emitter->emit($response);
 	}
 }
