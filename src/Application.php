@@ -71,6 +71,7 @@ class Application{
 	
 	// Esse método pega os dados retornados pela rota e joga eles na response
 	protected function emitResponse(ResponseInterface $response){
+		// SAPI =  Server Application Program Interface, uma interface para implementar serviços do Diacotoros
 		$emitter = new SapiEmitter();
 		$emitter->emit($response);
 	}
