@@ -21,16 +21,31 @@ $app =  new Application($serviceContainer);
 $app->plugin(new RoutePlugin());
 $app->plugin(new ViewPlugin());
 
+// Já temos o plugin do twig pronto, retornando a view e dos dados da página no formato de response
+// Como se trata de uma closure, podemos utilizar o comando use() para importar variáveis do escolo logo acima
+$app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
+	$view = $app->service('view.renderer');
+	return $view->render('teste.html.twig',['name'=>$request->getAttribute('name')]);
+});
+
+$app->get('/cat',function() use ($app) {
+	$view = $app->service('view.renderer');
+	return $view->render('category-costs/list.html.twig');
+});
+
+$app->start();
+
+/*
 // Definimos no application que o método get() cria uma rota 
-/*// ISSO FOI ANTES DE DEFINIR QUE AS NOSSAS ROTAS PRECISAM RETORNAR RESPONSES
+// ISSO FOI ANTES DE DEFINIR QUE AS NOSSAS ROTAS PRECISAM RETORNAR RESPONSES
 $app->get("/inicio",function(){
 	echo "hello world";
 });
-*/
+
 
 // Definindo uma rota que recebe os atributos da requisição. No caso vamos pegar os atributos do GET. Portanto quando a rota for acessada ela faz uma requisição ao servidor e espera uma resposta que virá através de um objeto ServerRequestInterface
 // Note que essa request só responde se o endereço for corretamente incluído, ou seja, uma barra fora de lugar e o servidor não será capaz de localizar a rota
-/*// ISSO FOI ANTES DE DEFINIR QUE AS NOSSAS ROTAS PRECISAM RETORNAR RESPONSES
+// ISSO FOI ANTES DE DEFINIR QUE AS NOSSAS ROTAS PRECISAM RETORNAR RESPONSES
 
 $app->get("/home/{name}/{id}",function(ServerRequestInterface $request){
 	echo "mostrando a home <br>";
@@ -38,15 +53,6 @@ $app->get("/home/{name}/{id}",function(ServerRequestInterface $request){
 	echo "<br>";
 	echo $request->getAttribute('id');
 });
-*/
-
-//
-$app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
-	$view = $app->service('view.renderer');
-	return $view->render('teste.html.twig',['name'=>$request->getAttribute('name')]);
-});
-
-
 
 
 // Agora ao invés de pegar os dados direto da interface vamos pegar os dados da resposta
@@ -56,5 +62,4 @@ $app->get("/response",function(ServerRequestInterface $request){
 	$response->getBody()->write("Resposta com emmiter do diactores");
 	return $response;
 });
-
-$app->start();
+*/
