@@ -21,3 +21,19 @@ Contudo como o pimple não dá suporte a PSR11(sob revisao) con isso instalaremos 
 https://github.com/xtreamwayz/pimple-container-interop [Já vai instalar o pimple com a PSR11]  
 
 ==========================================================================================================================
+
+ELOQUENT ORM
+
+É uma das bibliotecas do laravel para persistencia de dados. O eloquent irá nos ajudar a fazer o mapeamento do banco criando
+o que nos auxiliará a criar as classes de modelo com facilidade. Ele trabalhar com um design patters chamado active record,
+ 
+Durante a instalação houve um erro pois o laravel depende que a extensão MBSTRING seja ativada, basta ir no php.ini e 
+descomentar a linha para resolver o problema
+
+extension=php_mbstring.dll
+
+Outro problema surgiu, o php não foi capaz de localizar a pasta de extensões, bastou criar a linha
+
+extension_dir = C:\php71\ext 
+
+==========================================================================================================================

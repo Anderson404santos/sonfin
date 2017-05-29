@@ -1,25 +1,28 @@
 <?php
+
 use Psr\Http\Message\ResposeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SONFin\ServiceContainer;
 use SONFin\Application;
 use SONFin\Plugin\RoutePlugin;
 use SONFin\Plugin\ViewPlugin;
+use SONFin\Plugin\DbPlugin;
 use SONFin\ServiceContainerInterface;
 	
 //A pasta public conterá a parte da nossa aplicação que será acessível via web
 // Vamos importar o autoload, o index será o ponto de partida da aplica
 require_once __DIR__ . '/../vendor/autoload.php';
 
-
 // Lembre-se que tudo que chamarmos na index ficará globlal na aplicação, por que estamos utilizando o conceito de front-controller, onde todas as requisições serão centralizadas para o index.php que ficará responsável por montar a aplicação e carregar todas as dependencias necessárias para execução da aplicação, bem como prover as respostas para o cliente.
 $serviceContainer = new ServiceContainer();
+
 // Precisamos passar para aplicação a nossa configuração de container de serviços
 $app =  new Application($serviceContainer);
 
 // Vamos também criar o nosso plugin de rotas
 $app->plugin(new RoutePlugin());
 $app->plugin(new ViewPlugin());
+$app->plugin(new DbPlugin());
 
 // Já temos o plugin do twig pronto, retornando a view e dos dados da página no formato de response
 // Como se trata de uma closure, podemos utilizar o comando use() para importar variáveis do escolo logo acima
@@ -28,7 +31,7 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 	return $view->render('teste.html.twig',['name'=>$request->getAttribute('name')]);
 });
 
-$app->get('/cat',function() use ($app) {
+$app->get('/category-costs',function() use ($app) {
 	$view = $app->service('view.renderer');
 	return $view->render('category-costs/list.html.twig');
 });
@@ -53,7 +56,6 @@ $app->get("/home/{name}/{id}",function(ServerRequestInterface $request){
 	echo "<br>";
 	echo $request->getAttribute('id');
 });
-
 
 // Agora ao invés de pegar os dados direto da interface vamos pegar os dados da resposta
 $app->get("/response",function(ServerRequestInterface $request){
