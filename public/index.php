@@ -33,7 +33,12 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 
 $app->get('/category-costs',function() use ($app) {
 	$view = $app->service('view.renderer');
-	return $view->render('category-costs/list.html.twig');
+	
+	// vamos instanciar o modelo e utulizar os métodos que são extendidos do eloquent
+	$meuModel = new \SONFin\Model\CategoryCost();
+	// all() retorna todas as entradas da tabela
+	$categories = $meuModel->all();
+	return $view->render('category-costs/list.html.twig',['categories'=>$categories]);
 });
 
 $app->start();
