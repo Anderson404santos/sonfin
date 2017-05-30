@@ -8,21 +8,26 @@ use SONFin\Plugin\RoutePlugin;
 use SONFin\Plugin\ViewPlugin;
 use SONFin\Plugin\DbPlugin;
 use SONFin\ServiceContainerInterface;
+
 	
 //A pasta public conterá a parte da nossa aplicação que será acessível via web
 // Vamos importar o autoload, o index será o ponto de partida da aplica
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 // Lembre-se que tudo que chamarmos na index ficará globlal na aplicação, por que estamos utilizando o conceito de front-controller, onde todas as requisições serão centralizadas para o index.php que ficará responsável por montar a aplicação e carregar todas as dependencias necessárias para execução da aplicação, bem como prover as respostas para o cliente.
 $serviceContainer = new ServiceContainer();
 
+
 // Precisamos passar para aplicação a nossa configuração de container de serviços
 $app =  new Application($serviceContainer);
+
 
 // Vamos também criar o nosso plugin de rotas
 $app->plugin(new RoutePlugin());
 $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
+
 
 // Já temos o plugin do twig pronto, retornando a view e dos dados da página no formato de response
 // Como se trata de uma closure, podemos utilizar o comando use() para importar variáveis do escolo logo acima
@@ -31,9 +36,9 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 	return $view->render('teste.html.twig',['name'=>$request->getAttribute('name')]);
 });
 
+
 $app->get('/category-costs',function() use ($app) {
 	$view = $app->service('view.renderer');
-	
 	// vamos instanciar o modelo e utulizar os métodos que são extendidos do eloquent
 	$meuModel = new \SONFin\Model\CategoryCost();
 	// all() retorna todas as entradas da tabela
@@ -41,7 +46,28 @@ $app->get('/category-costs',function() use ($app) {
 	return $view->render('category-costs/list.html.twig',['categories'=>$categories]);
 });
 
+
+// Rota para retornar o formulário de category costs
+$app->get('/category-costs/new',function() use ($app) {
+	$view = $app->service('view.renderer');
+	return $view->render('category-costs/create.html.twig');
+});
+
+
+// Rota cadastrar dos dados vindos do formulário do category costs
+$app->post('/category-costs/store',function(ServerRequestInterface $request) use ($app) {
+	// A request vem do Server request interface
+	// Vamos utilizar o método getParsedBody() do diactoros para receber os dados da requisição
+	$data = $request->getParsedBody();
+	// Utilizamos o model para pegar esses dados e incluir no banco
+	\SONFin\Model\CategoryCost::create($data);
+	// Por fim retornamos um redirecionamento para uma página desejada. O Diactoros tem esse método pronto para nós 
+	return new \Zend\Diactoros\Response\RedirectResponse('/category-costs');
+});
+
+
 $app->start();
+
 
 /*
 // Definimos no application que o método get() cria uma rota 

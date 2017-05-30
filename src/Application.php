@@ -35,11 +35,19 @@ class Application{
 	}
 
 	//Esse método cria para nós a rota. precisamos passar para ela a pasta da aplicação. Passamos também a ação(function do controller) a ser executada. Também podemos nomear essa rota para acesso rápido
+	//Método para requisições
 	public function get($path,$action, $name = null){
 		$routing = $this->service('routing');
 		$routing->get($name, $path, $action);
 		return $this;
 	}
+	
+	// Agora vamos criar o post
+	public function post($path,$action,$name = null){
+		$routing = $this->service('routing');
+		$routing->post($name, $path, $action);
+		return $this;
+	}	
 	
 	// Esse método executa a rota
 	public function start(){
