@@ -49,6 +49,18 @@ class Application{
 		return $this;
 	}	
 	
+	// Faz redirecionamento de página
+	public function redirect($path){
+		// O Diactoros tem esse método pronto para nós 
+		return new \Zend\Diactoros\Response\RedirectResponse($path);
+	}
+	
+	public function route(string $name, array $params = [] ){
+		$generator  = $this->service('routing.generator');
+		$path = $generator->generate($name,$params);
+		return $this->redirect($path); 
+	}
+	
 	// Esse método executa a rota
 	public function start(){
 		

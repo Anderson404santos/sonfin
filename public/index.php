@@ -44,26 +44,52 @@ $app->get('/category-costs',function() use ($app) {
 	// all() retorna todas as entradas da tabela
 	$categories = $meuModel->all();
 	return $view->render('category-costs/list.html.twig',['categories'=>$categories]);
-});
+},'category-costs.list');
 
 
 // Rota para retornar o formulário de category costs
 $app->get('/category-costs/new',function() use ($app) {
 	$view = $app->service('view.renderer');
 	return $view->render('category-costs/create.html.twig');
-});
+},'category-costs.new');
 
 
 // Rota cadastrar dos dados vindos do formulário do category costs
 $app->post('/category-costs/store',function(ServerRequestInterface $request) use ($app) {
 	// A request vem do Server request interface
-	// Vamos utilizar o método getParsedBody() do diactoros para receber os dados da requisição
+	// Vamos utilizar o método getParsedBody() do diactoros para receber os dados da requisição POST
 	$data = $request->getParsedBody();
 	// Utilizamos o model para pegar esses dados e incluir no banco
 	\SONFin\Model\CategoryCost::create($data);
-	// Por fim retornamos um redirecionamento para uma página desejada. O Diactoros tem esse método pronto para nós 
-	return new \Zend\Diactoros\Response\RedirectResponse('/category-costs');
-});
+	return $app->route('category-costs.list');
+},'category-costs.store');
+
+// Agora criamos uma rota para atualização de dados
+// Como vamos pegar um dado do get, precisamos receber uma request no callback
+$app->get('/category-costs/{id}/edit',function(ServerRequestInterface $request) use ($app) {
+	$view = $app->service('view.renderer');
+	
+	//Pegando o valor do por get na request
+	$id = $request->getAttribute('id');
+	
+	//Agora vamos utilizar o eloquent para fazer uma busca no banco a partir de uma id
+	$category = \SONFin\Model\CategoryCost::findOrFail($id);
+	
+	//Agora renderizamos a view passando o valor buscado 
+	return $view->render('category-costs/edit.html.twig',['category'=>$category]);
+},'category-costs.edit');
+
+
+$app->post('/category-costs/{id}/update',function(ServerRequestInterface $request) use ($app) {
+	$id = $request->getAttribute('id');
+	$category = \SONFin\Model\CategoryCost::findOrFail($id);
+	$data = $request->getParsedBody();
+	// Com o método fill() do eloquent podemos popular um modelo com dados vindos de um array, chamado de massive assigment fazemos a atribuição de valores no modelo, se no modelo tem o campo ID, troca pelo valor ID do array e etc
+	$category->fill($data);
+	$category->save();
+	return $app->route('category-costs.list');
+},'category-costs.update');
+
 
 
 $app->start();

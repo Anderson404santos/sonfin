@@ -12,7 +12,8 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
-							<a href="#" class="btn btn-default">
+							<!--O método abaixo é um método costumizado, criamos ele no plugin do twig para que possamos utilizar o método de criação de rotas -->
+							<a href="{{route('category-costs.new')}}" class="btn btn-default">
 								<span class="glyphicon glyphicon-plus"></span>
 							</a>
 						</div>
@@ -34,7 +35,7 @@
 										<td>{{ category.id }}</td>
 										<td>{{ category.name }}</td>
 										<td>
-											<a href="#">
+											<a href="{{route('category-costs.edit',{'id':category.id})}}">
 												<span class="glyphicon glyphicon-pencil"></span>
 											</a>
 											|
