@@ -37,6 +37,7 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 });
 
 
+// Rota para tela de listagem de categoria de custo
 $app->get('/category-costs',function() use ($app) {
 	$view = $app->service('view.renderer');
 	// vamos instanciar o modelo e utulizar os métodos que são extendidos do eloquent
@@ -47,14 +48,14 @@ $app->get('/category-costs',function() use ($app) {
 },'category-costs.list');
 
 
-// Rota para retornar o formulário de category costs
+// Rota para formulário de cadastro de categoria de custo
 $app->get('/category-costs/new',function() use ($app) {
 	$view = $app->service('view.renderer');
 	return $view->render('category-costs/create.html.twig');
 },'category-costs.new');
 
 
-// Rota cadastrar dos dados vindos do formulário do category costs
+// Rota para cadastrar categoria de custo
 $app->post('/category-costs/store',function(ServerRequestInterface $request) use ($app) {
 	// A request vem do Server request interface
 	// Vamos utilizar o método getParsedBody() do diactoros para receber os dados da requisição POST
@@ -64,7 +65,8 @@ $app->post('/category-costs/store',function(ServerRequestInterface $request) use
 	return $app->route('category-costs.list');
 },'category-costs.store');
 
-// Agora criamos uma rota para atualização de dados
+
+// Rota pata formulário de edição de categoria de custo
 // Como vamos pegar um dado do get, precisamos receber uma request no callback
 $app->get('/category-costs/{id}/edit',function(ServerRequestInterface $request) use ($app) {
 	$view = $app->service('view.renderer');
@@ -80,6 +82,7 @@ $app->get('/category-costs/{id}/edit',function(ServerRequestInterface $request) 
 },'category-costs.edit');
 
 
+// Rota para atualizar categoria de custo
 $app->post('/category-costs/{id}/update',function(ServerRequestInterface $request) use ($app) {
 	$id = $request->getAttribute('id');
 	$category = \SONFin\Model\CategoryCost::findOrFail($id);
@@ -90,6 +93,23 @@ $app->post('/category-costs/{id}/update',function(ServerRequestInterface $reques
 	return $app->route('category-costs.list');
 },'category-costs.update');
 
+
+// Rota para aviso de deleção
+$app->get('/category-costs/{id}/warning',function(ServerRequestInterface $request)use($app){
+	$view = $app->service('view.renderer');
+	$id = $request->getAttribute('id');
+	$category = \SONFin\Model\CategoryCost::findOrFail($id);
+	return $view->render('category-costs/warning.html.twig',['category'=>$category]);
+},'category-costs.warning');
+
+
+// Rota para deletar categoria de custo
+$app->get('/category-costs/{id}/delete',function(ServerRequestInterface $request)use($app){
+	$id = $request->getAttribute('id');
+	$category = \SONFin\Model\CategoryCost::findOrFail($id);
+	$category->delete();
+	return $app->route('category-costs.list');
+},'category-costs.delete');
 
 
 $app->start();
