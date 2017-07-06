@@ -1,0 +1,12 @@
+<!-- O nossos formulários são muitos iguais, vamos reaproveitar esse código-->
+<!-- Para isso vamos transformar o atributo action numa varíavel que será chamada se cadastro ou alteração -->
+<form method="post" action="{{ action }}">
+	<div class="form-group">
+		<label for="nome">Nome:</label>
+		<!-- O atributo value é utilizado apenas na edição. Quando passamos uma variavel o e twig não encontra, ele não retorna erro, apenas não preenche na variável.-->
+		<input class="form-control" type="text" placeholder="nome" name="name" value="{{ category.name }}">
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">
+		<span class="glyphicon glyphicon-{{submitIcon}}"></span>
+	</button>
+</form>

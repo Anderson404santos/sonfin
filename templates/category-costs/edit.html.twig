@@ -10,15 +10,11 @@
 					<h3 class="panel-title">Editar de categoria de custo</h3>
 				</div>
 				<div class="panel-body">
-					<form method="post" action="{{route('category-costs.update',{'id':category.id})}}">
-						<div class="form-group">
-							<label for="nome">Nome:</label>
-							<input class="form-control" type="text" placeholder="nome" name="name" value="{{ category.name }}">
-						</div>
-						<button type="submit" class="btn btn-primary btn-block">
-							<span class="glyphicon glyphicon-floppy-disk"></span>
-						</button>
-					</form>
+					<!-- Vamos setar as variáveis que a view a ser incluida vai utolizar--> 
+					{% set action = route('category-costs.update',{'id':category.id}) %}
+					{% set submitIcon = 'pencil' %}
+					<!-- Vamos fazer o include do formulario, precisamos incluir o caminho inteiro para o twig localizar-->
+					{% include 'category-costs/_form.html.twig' %}
 				</div>
 			</div>
 		</div>
