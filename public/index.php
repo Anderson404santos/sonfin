@@ -5,6 +5,7 @@ use SONFin\Application;
 use SONFin\Plugin\RoutePlugin;
 use SONFin\Plugin\ViewPlugin;
 use SONFin\Plugin\DbPlugin;
+use SONFin\Plugin\AuthPlugin;
 use SONFin\ServiceContainerInterface;
 
 	
@@ -25,6 +26,7 @@ $app =  new Application($serviceContainer);
 $app->plugin(new RoutePlugin());
 $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
+$app->plugin(new AuthPlugin());
 
 
 // Já temos o plugin do twig pronto, retornando a view e dos dados da página no formato de response
@@ -34,8 +36,11 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 	return $view->render('teste.html.twig',['name'=>$request->getAttribute('name')]);
 });
 
+// Chamaada dos controllers
 require_once(__DIR__ . '/../src/controllers/CategoryCosts.php');
 require_once(__DIR__ . '/../src/controllers/Users.php');
+require_once(__DIR__ . '/../src/controllers/Auth.php');
+
 
 $app->start();
 
