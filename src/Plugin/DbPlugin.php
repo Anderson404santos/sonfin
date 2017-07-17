@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace SONFin\Plugin;
 
 use SONFin\Model\CategoryCost;
+use SONFin\Model\Users;
 use SONFin\Model\Repository\RepositoryFactory;
 use SONFin\ServiceContainerInterface;
 use Interop\Container\ContainerInterface;
@@ -35,6 +36,9 @@ class DbPlugin implements PluginInterface
 		// Vamos ciar um serviço para chamar o repository para category costs. Antes ele estava no front-controller mas isso criar intancia desnecessária do objeto enxendo a memoria com repositories que não estão em uso. Vamos coloca-la no serviço e chamar a medida que for necessário
 		$container->addLazy('category-costs.repository',function(ContainerInterface $container){
 			return $container->get('repository.factory')->factory(CategoryCost::class);
+		});
+		$container->addLazy('users.repository',function(ContainerInterface $container){
+			return $container->get('repository.factory')->factory(Users::class);
 		});
 	}	
 

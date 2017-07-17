@@ -1,0 +1,26 @@
+<!-- O nossos formulários são muitos iguais, vamos reaproveitar esse código-->
+<!-- Para isso vamos transformar o atributo action numa varíavel que será chamada se cadastro ou alteração -->
+<form method="post" action="{{ action }}">
+	<div class="form-group">
+		<label for="first_name">Primeiro Nome:</label>
+		<input class="form-control" type="text" name="first_name" value="{{ users.first_name }}">
+	</div>
+	<div class="form-group">
+		<label for="last_name">Complemento do nome:</label>
+		<input class="form-control" type="text" name="last_name" value="{{ users.last_name }}">
+	</div>
+	<div class="form-group">
+		<label for="nome">Email:</label>
+		<input class="form-control" type="text" name="email" value="{{ users.email }}">
+	</div> 
+	
+	{% if users.id is null %}
+	<div class="form-group">
+		<label for="password">Password:</label>
+		<input class="form-control" type="text" placeholder="password" name="password">
+	</div>
+	{% endif %}
+	<button type="submit" class="btn btn-primary btn-block">
+		<span class="glyphicon glyphicon-{{submitIcon}}"></span>
+	</button>
+</form>

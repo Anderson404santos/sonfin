@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<!--Essa página será importada dentro do layout-->
+	<!--Fazemos isso com o comando extends do twig-->
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Administração de Usuários</h3>
+				</div>
+				<div class="panel-body">
+					<!-- Vamos setar as variáveis que a view a ser incluida vai utolizar--> 
+					{% set action = route('users.store') %}
+					{% set submitIcon = 'floppy-disk' %}
+					<!-- Vamos fazer o include do formulario, precisamos incluir o caminho inteiro para o twig localizar-->
+					{% include 'users/_form.html.twig' %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Delimita o fim do bloco a ser importado-->
+{% endblock %}

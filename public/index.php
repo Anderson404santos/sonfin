@@ -35,6 +35,7 @@ $app->get('/teste/{name}',function(ServerRequestInterface $request) use ($app){
 });
 
 require_once(__DIR__ . '/../src/controllers/CategoryCosts.php');
+require_once(__DIR__ . '/../src/controllers/Users.php');
 
 $app->start();
 

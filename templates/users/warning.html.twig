@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<!--Essa página será importada dentro do layout-->
+	<!--Fazemos isso com o comando extends do twig-->
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Deseja excluir o usuário {{users.first_name}}?</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<a href="{{route('users.list')}}" class="btn btn-primary">
+								<span class="glyphicon glyphicon-remove"></span> NÃO
+							</a>
+							<a href="{{route('users.delete',{'id':users.id})}}" class="btn btn-danger">
+								<span class="glyphicon glyphicon-ok"></span> SIM
+							</a>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-12">
+							
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<th scope="row" colspan="2">#{{users.id}}</th>
+										
+									</tr>
+									<tr>	
+										<th scope="row">Nome</th>
+										<td>{{users.first_name ~ ' ' ~ users.last_name}}</td>
+									</tr>
+									<tr>
+										<th scope="row">Email</th>
+										<td>{{users.email}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Delimita o fim do bloco a ser importado-->
+{% endblock %}
