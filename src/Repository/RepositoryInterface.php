@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace SONFin\Model\Repository;
+namespace SONFin\Repository;
 
 
 //Repository é um Design patterns que consiste em dividir a responsabilidade do modelo com o repositório
@@ -12,5 +12,6 @@ Interface RepositoryInterface
 	public function create(array $data);
 	public function update(int $id,array $data);
 	public function delete(array $data);
-	public function find(int $id);
+	public function find(int $id, bool $failIfNotExists = true);
+	public function findByField(string $field,$value);
 }

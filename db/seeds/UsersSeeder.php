@@ -3,17 +3,20 @@
 use Phinx\Seed\AbstractSeed;
 
 class UsersSeeder extends AbstractSeed
-{
-		
+{	
     public function run()
     {
-		$faker = \Faker\Factory::create('pt-BR');
+		$app = require(__DIR__ . '/../bootstrap.php');		
+		$auth = $app->service('auth');
+		$aa = 'teste';
+		
+		$faker = \Faker\Factory::create('pt_BR');
 	 	$users = $this->table('users');
 		$users->insert([
 			'first_name' => $faker->firstName,
 			'last_name' => $faker->lastName,
 			'email' => 'admin@user.com',
-			'password' =>  '12345',
+			'password' =>  $auth->hashPassword('123546'),
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')			
 		])->save();
@@ -24,7 +27,7 @@ class UsersSeeder extends AbstractSeed
 					'last_name' => $faker->lastName,
 					// Evita inserção duplicada
 					'email' => $faker->unique()->email,
-					'password' =>  '12345',
+					'password' =>  $auth->hashPassword('123546'),
 					'created_at' => date('Y-m-d H:i:s'),
 					'updated_at' => date('Y-m-d H:i:s')					
 			];

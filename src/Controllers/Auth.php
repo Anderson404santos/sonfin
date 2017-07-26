@@ -1,6 +1,6 @@
 <?php
 
-namespace SONFin\Model;
+namespace SONFin\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
 $app->get('/login',function() use ($app) {
@@ -9,8 +9,13 @@ $app->get('/login',function() use ($app) {
 },'auth.login_form');
 
 $app->post('/login',function(ServerRequestInterface $request) use ($app) {
-	$app->service(name: 'auth')->login();
 	$view = $app->service('view.renderer');
-	return $view->render('auth/login.html.twig',['auth'=>$auth]);
-},'auth.login');*/
-
+	$auth = $app->service('auth');
+	$data = $request->getParsedBody();
+	$result = $auth->login($data);	
+	//echo (int)$result; exit;
+	if(!$result){
+		return $view->render('auth/login.html.twig');
+	}
+	return $app->route('category-costs.list');
+},'auth.login');

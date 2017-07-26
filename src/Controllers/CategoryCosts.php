@@ -1,6 +1,6 @@
 <?php
 
-namespace SONFin\Model;
+namespace SONFin\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
 // Rota para tela de listagem de categoria de custo

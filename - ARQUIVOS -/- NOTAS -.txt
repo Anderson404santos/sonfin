@@ -22,6 +22,10 @@ https://github.com/xtreamwayz/pimple-container-interop [Já vai instalar o pimple
 
 ==========================================================================================================================
 
+AURA ROUTER
+
+==========================================================================================================================
+
 ELOQUENT ORM
 
 É uma das bibliotecas do laravel para persistencia de dados. O eloquent irá nos ajudar a fazer o mapeamento do banco criando
@@ -37,3 +41,8 @@ Outro problema surgiu, o php não foi capaz de localizar a pasta de extensões, ba
 extension_dir = C:\php71\ext 
 
 ==========================================================================================================================
+
+JASNY AUTH
+
+É uma biblioteca para segurança, utilizaremos ela para criar uma área de acesso restrito no nosso site com um formulário 
+de login, nível de acesso e protegeremos as rotas contra acessos não autorizados,

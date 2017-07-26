@@ -1,6 +1,6 @@
 <?php
 
-namespace SONFin\Model;
+namespace SONFin\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
 $app->get('/users',function() use ($app) {

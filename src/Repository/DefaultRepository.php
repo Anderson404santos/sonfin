@@ -1,6 +1,7 @@
 <?php
 
-namespace SONFin\Model\Repository;
+namespace SONFin\Repository;
+use SONFin\Repository\RepositoryInterface;
 
 class DefaultRepository implements RepositoryInterface
 {
@@ -42,8 +43,12 @@ class DefaultRepository implements RepositoryInterface
 		$model = $this->find($id);
 		$model->delete();
 	}
-	public function find(int $id){
+	public function find(int $id, bool $failIfNotExists = true){
 		// Para buscar pelo id apenas utilizamos o metodo Eloquent:find(id)
-		return $this->model->findOrFail($id);
+		return $failIfNotExists? $this->model->findOrFail($id) : $this->model->find($id);
+	}
+	
+	public function findByField(string $field,$value){
+		return $this->model->where($field,'=',$value)->get();
 	}
 }
