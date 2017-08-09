@@ -31,7 +31,7 @@ class JasnyAuth extends \Jasny\Auth
 	{
 		// Esse método sempre vai receber um array no parâmetro vindo do repository. Só nos interessa a posição 0 desse array
 		//return $this->repository->findByField('email',$username)[0];
-		$result = $this->repository->findByField('email', $username);
+		$result = $this->repository->findByField('email', $username);	
         return count($result)? $result[0] : null;
 	}	
 }

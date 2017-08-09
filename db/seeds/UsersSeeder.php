@@ -16,7 +16,7 @@ class UsersSeeder extends AbstractSeed
 			'first_name' => $faker->firstName,
 			'last_name' => $faker->lastName,
 			'email' => 'admin@user.com',
-			'password' =>  $auth->hashPassword('123546'),
+			'password' =>  $auth->hashPassword('123456'),
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')			
 		])->save();
@@ -27,7 +27,7 @@ class UsersSeeder extends AbstractSeed
 					'last_name' => $faker->lastName,
 					// Evita inserção duplicada
 					'email' => $faker->unique()->email,
-					'password' =>  $auth->hashPassword('123546'),
+					'password' =>  $auth->hashPassword('123456'),
 					'created_at' => date('Y-m-d H:i:s'),
 					'updated_at' => date('Y-m-d H:i:s')					
 			];

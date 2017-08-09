@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
+	<!-- Criamos uma extensão responsável por instanciar a classe de autenticação dentro do template, funciona como uma classe global. -->
+	<!-- Mostraremos o menu apenas para usuários atenticados-->
+	{% if Auth.check() %}
     <nav class="navbar navbar-default navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -47,6 +50,7 @@
             </div>
         </div>
     </nav>
+	{% endif %}
 {% block content %}{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

@@ -12,8 +12,7 @@ $app->post('/login',function(ServerRequestInterface $request) use ($app) {
 	$view = $app->service('view.renderer');
 	$auth = $app->service('auth');
 	$data = $request->getParsedBody();
-	$result = $auth->login($data);	
-	//echo (int)$result; exit;
+	$result = $auth->login($data);		
 	if(!$result){
 		return $view->render('auth/login.html.twig');
 	}
