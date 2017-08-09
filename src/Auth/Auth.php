@@ -20,11 +20,16 @@ class Auth implements AuthInterface
 		return $this->jasny->login($email,$password) !== null;
 	}
 	
+	// O método user retorna os dados da sessão do usuário, com ela podemos acessar dados como nome e email do usuario
+	public function user()
+	{
+		return $this->jasny->user();
+	}
 	
 	public function check():bool
 	{
 		// Verificando se o usuário é diferente de null
-		return $this->jasny->user() !== null;
+		return $this->user() !== null;
 	}
 	
 	public function logout():void

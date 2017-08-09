@@ -23,7 +23,6 @@ class ViewPlugin implements PluginInterface
 			$generator = $container->get('routing.generator');
 
 			// Então vamos passar os dados da sessão para o twig, e será utilizada por uma extensão que criamos com o intuito de instanciar os dados da autenticação dentro dos templates, assim não precisaremos ficar passando manualmente a sessão pára cada template que for exercutado.
-			
 			$auth = $container->get('auth');
 			$twig->addExtension(new TwigGlobals($auth));
 			

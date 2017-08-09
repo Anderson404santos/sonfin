@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Jasny\Auth\User as JasnyUser;
 
 //Como fizemos uma integração com a biblioteca Jasny, precisamos que o nosso modelo de usuário implemente a interface do user do Jasny
-class Users extends Model implements JasnyUser
+// Note como é possível que uma classe implemtente várias interfaces, contudo ela pode extender somente uma classe. Não se esqueça disso
+class Users extends Model implements JasnyUser, UserInterface
 {
 	// O Eloquent trabalha com entradas de dados segura, significa que ele só salva dados se esse dado for mapeado na classe
 	// Contudo o Eloquent também trabalha com um mecanismo de massive assigment, assim qualquer dado que se passa para os métodos de controle do banco, você passa apenas o dado que o Eloquent se vira
@@ -26,6 +27,18 @@ class Users extends Model implements JasnyUser
 	public function getUserName()
 	{
 		return $this->email; 
+	}
+	
+	public function getFullName(){
+		return "{$this->firstName} {$this->lastName}";
+	}
+	
+	public function getEmail(){
+		return $this->email;
+	}
+	
+	public function getPassword(){
+		return $this->password;
 	}
 	
 	public function getHashedPassword()

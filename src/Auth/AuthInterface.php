@@ -7,4 +7,5 @@ interface AuthInterface
 	public function login(array $credentials);
 	public function check();
 	public function logout();
+	public function user();
 }
