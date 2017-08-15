@@ -10,6 +10,7 @@ use Zend\Diactoros\Response\SapiEmitter;
 
 class Application{
 	private $serviceContainer;
+	private $middleware = [];
 
 	// Aqui temos um exemplo de injeção de dependencia. Ao invés de ficar dando 'new ServiceContainer()' sempre que for necessário usar a aplication, faremos com que a nossa Application receba apenas uma instancia do serviceContainer obrigando que ela implemente a interface serviceContainerInterface.
 	// Nesse caso estamos injetando a dependencia dentro da nossa classe, cabendo a nós apenas usar
@@ -17,11 +18,13 @@ class Application{
 	public function __construct(ServiceContainerInterface $serviceContainer){
 		$this->serviceContainer = $serviceContainer;
 	}
-	
+
+	// Método realiza uma pesquisa no service container e retorna a instancia do objeto solicitado se existir 
 	public function service($name){
 		return $this->serviceContainer->get($name);
 	}
 	
+	// Guarda um objeto no conainter de serviços, para poder ser acessado atravez de um nome cadastrado
 	public function addService(string $name,$service){
 		if(is_callable($service)){
 			$this->serviceContainer->addLazy($name,$service);
@@ -30,6 +33,7 @@ class Application{
 		}
 	}
 	
+	// ...
 	public function plugin(PluginInterface $plugin){
 		$plugin->register($this->serviceContainer);
 	}
@@ -55,10 +59,36 @@ class Application{
 		return new \Zend\Diactoros\Response\RedirectResponse($path);
 	}
 	
+	// Método para fazer redirecionamento atravéz de uma roda informada
 	public function route(string $name, array $params = [] ){
 		$generator  = $this->service('routing.generator');
+		// O método recebe uma rota e gera o caminho dela caso exista nos controllers
 		$path = $generator->generate($name,$params);
 		return $this->redirect($path); 
+	}
+	
+	// Vamos implementar um middleware no nosso sistema de autenticação, ele fica entre a aplicação e a requisição do servidor, assim poderemos processar a requisição antes mesmo dela chegar na nossa aplicação, no caso nas rotas
+	// O objeto que receberemos será um callable, ou seja, o retorno de uma função
+	public function middleware(callable $callback){
+		array_push($this->middleware,$callback);
+		return $this;
+	}
+	
+	// Método para executar todos os middlewares cadastrados
+	protected function runMiddleware(){
+		//print_r($this->middleware[1]);exit;		
+
+		foreach($this->middleware as $call){
+			// Vamos acessar cada função e passar para elas a requisição que está sendo feita, temos um serviço já implementado para recuperar todas as requisições que são feitas na nossa aplicação
+			$result = $call($this->service(RequestInterface::class));
+			// Assim se o objeto for for uma instancia de uma resposta a auma requisição paramos de executar o foreach e retornamos o objeto para a aplicação
+			// Parando a aplicação e retornando a resposta obtida, que pode ser uma mensagem de erro ou redicionamento(página de login)
+			if($result instanceof ResponseInterface){
+				return $result;
+			}
+		}
+		// Se retornar null quer dizer que o middleware não retornou nenhuma resposta e aplicação deve continuar sendo executada normalmente
+		return null;
 	}
 	
 	// Esse método executa a rota
@@ -81,6 +111,16 @@ class Application{
 			// O método withAttribute() pertence a  biblioteca aura, vai fazer uma busca no cabeçalho pelo campo que for requisitado na rota
 			$request = $request->withAttribute($key,$value);
 		}	
+	
+		// Aqui age o nosso middleware, depois que buscamos no servidor pela rota é retornado um objeto com a rota
+		// Executaramos um middleware que pode verificar se o usuário está logado ou se tem permissao para acessar a rota 
+		$result = $this->runMiddleware();
+		// Caso tenha algum problema emitimos uma resposta(redirecionamento) e encerramos a execução do bloco de código
+		// Assim se houver algum tipo de problema detectado pelo middleware podemos impedir a execução da rota e criar uma ação alteranativa
+		if($result){
+			$this->emitResponse($result);
+			return;
+		}
 	
 		// Vamos acessar a ação da rota que vai retornar dados processados
 		$callable = $route->handler; 
