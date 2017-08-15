@@ -34,7 +34,8 @@ class Auth implements AuthInterface
 	
 	public function logout():void
 	{
-		
+		// Esse método destroi o usuario que está armazenado na sessao
+		$this->jasny->logout();
 	}	
 	public function hashPassword($password)
 	{

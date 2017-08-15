@@ -18,3 +18,10 @@ $app->post('/login',function(ServerRequestInterface $request) use ($app) {
 	}
 	return $app->route('category-costs.list');
 },'auth.login');
+
+
+
+$app->get('/logout',function() use ($app) {
+	$app->service('auth')->logout();
+	return $app->route('auth.login_form');
+},'auth.logout');

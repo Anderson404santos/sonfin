@@ -30,7 +30,7 @@ class Users extends Model implements JasnyUser, UserInterface
 	}
 	
 	public function getFullName(){
-		return "{$this->firstName} {$this->lastName}";
+		return $this->first_name." ".$this->last_name;
 	}
 	
 	public function getEmail(){
