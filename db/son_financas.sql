@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 17-Jul-2017 às 15:35
+-- Generation Time: 16-Ago-2017 às 18:18
 -- Versão do servidor: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -30,32 +30,25 @@ CREATE TABLE `category_costs` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `category_costs`
 --
 
-INSERT INTO `category_costs` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(2, 'Von Moussef', '2017-06-19 00:00:00', '2017-06-19 00:00:00'),
-(3, 'Prof. Oscar Rohan I', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(4, 'Dr. Maye Waters', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(5, 'Roy Mills', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(6, 'Bridie Wehner', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(7, 'Brannon Champlin', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(8, 'Isac Hettinger', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(9, 'Mrs. Annette Koch', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(10, 'Santos Padberg', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(11, 'Maude Kutch', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(12, 'Prof. Jonathon Johns Sr.', '2017-04-25 16:14:07', '2017-04-25 16:14:07'),
-(13, 'teste', '2017-05-30 23:23:23', '2017-05-30 23:23:23'),
-(14, 'teste264', '2017-06-14 15:15:56', '2017-06-14 15:15:56'),
-(15, 'Outro Teste', '2017-06-19 15:10:37', '2017-06-19 15:10:37'),
-(16, 'teste159', '2017-06-19 16:05:08', '2017-06-19 16:05:08'),
-(17, 'cat', '2017-06-19 16:05:29', '2017-06-19 16:05:29'),
-(18, 'cat', '2017-06-19 16:06:01', '2017-06-19 16:06:01'),
-(19, 'teste112233', '2017-06-19 16:07:48', '2017-06-19 16:07:48');
+INSERT INTO `category_costs` (`id`, `name`, `created_at`, `updated_at`, `user_id`) VALUES
+(1, 'Agua', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 3),
+(2, 'Luz', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 3),
+(3, 'Cartao', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 3),
+(4, 'Imposto de Renda', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 2),
+(5, 'Supermercado', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 1),
+(6, 'Vertuario', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 4),
+(7, 'Cartao', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 2),
+(8, 'Cartao', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 2),
+(9, 'Vertuario', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 4),
+(10, 'Entretenimento', '2017-08-16 18:14:06', '2017-08-16 18:14:06', 2);
 
 -- --------------------------------------------------------
 
@@ -76,8 +69,9 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`version`, `migration_name`, `start_time`, `end_time`, `breakpoint`) VALUES
-(20170419164553, 'CreateCategoryCosts', '2017-04-20 18:06:52', '2017-04-20 18:06:53', 0),
-(20170710182842, 'CreateUsersTable', '2017-07-11 02:04:27', '2017-07-11 02:04:27', 0);
+(20170419164553, 'CreateCategoryCosts', '2017-08-16 21:14:05', '2017-08-16 21:14:05', 0),
+(20170710182842, 'CreateUsersTable', '2017-08-16 21:14:05', '2017-08-16 21:14:05', 0),
+(20170816160527, 'AddUserToCategoryCosts', '2017-08-16 21:14:05', '2017-08-16 21:14:06', 0);
 
 -- --------------------------------------------------------
 
@@ -100,10 +94,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(2, 'Laurel', 'Schroeder', 'admin@user.com', '12345', '2017-07-10 23:07:30', '2017-07-10 23:07:30'),
-(3, 'Dusty', 'Kassulke', 'mavis.homenick@yost.net', '12345', '2017-07-10 23:07:30', '2017-07-10 23:07:30'),
-(4, 'Christa', 'Ullrich', 'tina.keebler@homenick.net', '12345', '2017-07-10 23:07:30', '2017-07-10 23:07:30'),
-(5, 'Desmond', 'Simonis', 'ubode@orn.com', '12345', '2017-07-10 23:07:30', '2017-07-10 23:07:30');
+(1, 'Aaron', 'Zaragoça', 'admin@user.com', '$2y$10$MBw2d3tqXMgamFweQhS5zO5WgUSwY9W6byZXuzlkwHAo7mIAVwLJe', '2017-08-16 18:14:06', '2017-08-16 18:14:06'),
+(2, 'Olívia', 'Quintana', 'mascarenhas.daniel@rodrigues.com.br', '$2y$10$AOD7Sx.c1cekP89DUSg.2uHMWJTZ/qQT6I.Q9752jlXGHDWD6.9wq', '2017-08-16 18:14:06', '2017-08-16 18:14:06'),
+(3, 'Olívia', 'Vila', 'ymontenegro@corona.net', '$2y$10$Zf625cmwe1B1rRsvj2T49u.mzKZ5sjWo2AoEzlL8yhgPobDhpThZ6', '2017-08-16 18:14:06', '2017-08-16 18:14:06'),
+(4, 'Suzana', 'Bezerra', 'darosa.abgail@hotmail.com', '$2y$10$tYt//lMCrfyD8CdDUcwtXuU35H9oLvC7V99RiiEOA31473PhycMWy', '2017-08-16 18:14:06', '2017-08-16 18:14:06');
 
 --
 -- Indexes for dumped tables
@@ -113,7 +107,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `crea
 -- Indexes for table `category_costs`
 --
 ALTER TABLE `category_costs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `migrations`
@@ -136,12 +131,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category_costs`
 --
 ALTER TABLE `category_costs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `category_costs`
+--
+ALTER TABLE `category_costs`
+  ADD CONSTRAINT `category_costs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

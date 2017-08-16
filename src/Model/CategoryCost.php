@@ -13,6 +13,7 @@ class CategoryCost extends Model
 	// Contudo o Eloquent também trabalha com um mecanismo de massive assigment, assim qualquer dado que se passa para os métodos de controle do banco, você passa apenas o dado que o Eloquent se vira
 	// Posto isso, podemos criar um atributo $fillable, o que você colocar aqui o eloquent vai conseiderar dado seguro e o passará diretamente para o model
 	protected $fillable = [
-			'name'
+			'name',
+			'user_id'
 	];
 } 
